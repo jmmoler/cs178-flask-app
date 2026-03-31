@@ -1,5 +1,5 @@
 # dbCode.py
-# Author: Your Name
+# Author: Joseph Moler
 # Helper functions for database connection and queries
 
 import pymysql
