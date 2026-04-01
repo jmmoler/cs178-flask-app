@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Update Player Stats</title>
+  </head>
+  <body>
+    <h1>Update Stats for Player {{ player_id }}</h1>
+    <form action="{{ url_for('update_stats', player_id=player_id) }}" method="post">
+      <label for="points">Points:</label><br />
+      <input type="number" id="points" name="points" required /><br />
+      
+      <label for="assists">Assists:</label><br />
+      <input type="number" id="assists" name="assists" required /><br />
+      
+      <label for="rebounds">Rebounds:</label><br />
+      <input type="number" id="rebounds" name="rebounds" required /><br />
+      
+      <label for="steals">Steals:</label><br />
+      <input type="number" id="steals" name="steals" /><br />
+      
+      <label for="blocks">Blocks:</label><br />
+      <input type="number" id="blocks" name="blocks" /><br />
+      
+      <label for="game_date">Game Date:</label><br />
+      <input type="date" id="game_date" name="game_date" required /><br />
+      
+      <input type="submit" value="Update Stats" />
+    </form>
+  </body>
+</html>

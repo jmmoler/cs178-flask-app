@@ -7,60 +7,66 @@ from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
 from dbCode import *
 
+
 app = Flask(__name__)
-app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
-                                   # it is required, but you can leave this alone
+app.secret_key = 'your_secret_key'  # This is required for flash messages
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-@app.route('/add-user', methods=['GET', 'POST'])
-def add_user():
+@app.route('/add-player', methods=['GET', 'POST'])
+def add_player():
     if request.method == 'POST':
         # Extract form data
         first_name = request.form['first_name']
         last_name = request.form['last_name']
-        genre = request.form['genre']
+        position = request.form['position']
         
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name:", first_name, last_name, ":", "Favorite Genre:", genre)
+        # Add player to the database
+        add_player(first_name, last_name, position)
         
-        flash('User added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
-        # Redirect to home page or another page upon successful submission
+        flash('Player added successfully!', 'success')
         return redirect(url_for('home'))
-    else:
-        # Render the form page if the request method is GET
-        return render_template('add_user.html')
+    return render_template('add_player.html')
 
-@app.route('/delete-user',methods=['GET', 'POST'])
-def delete_user():
+@app.route('/delete-player', methods=['GET', 'POST'])
+def delete_player():
     if request.method == 'POST':
         # Extract form data
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
+        player_id = request.form['player_id']
         
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name to delete:", first_name, last_name)
+        # Delete player from the database
+        delete_player(player_id)
         
-        flash('User deleted successfully! Hoorah!', 'warning') 
-        # Redirect to home page or another page upon successful submission
+        flash('Player deleted successfully!', 'warning')
         return redirect(url_for('home'))
-    else:
-        # Render the form page if the request method is GET
-        return render_template('delete_user.html')
+    return render_template('delete_player.html')
 
+@app.route('/display-players')
+def display_players():
+    # Fetch all players from the database
+    players = get_all_players()
+    return render_template('display_players.html', players=players)
 
-@app.route('/display-users')
-def display_users():
-    # hard code a value to the users_list;
-    # note that this could have been a result from an SQL query :) 
-    users_list = (('John','Doe','Comedy'),('Jane', 'Doe','Drama'))
-    return render_template('display_users.html', users = users_list)
+@app.route('/update-stats/<int:player_id>', methods=['GET', 'POST'])
+def update_stats(player_id):
+    if request.method == 'POST':
+        points = request.form['points']
+        assists = request.form['assists']
+        rebounds = request.form['rebounds']
+        steals = request.form['steals']
+        blocks = request.form['blocks']
+        game_date = request.form['game_date']
 
+        # Update player stats in the database
+        update_player_stats(player_id, points, assists, rebounds, steals, blocks, game_date)
 
-# these two lines of code should always be the last in the file
+        flash('Player stats updated successfully!', 'success')
+        return redirect(url_for('display_players'))
+
+    return render_template('update_stats.html', player_id=player_id)
+
+# These two lines of code should always be the last in the file
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

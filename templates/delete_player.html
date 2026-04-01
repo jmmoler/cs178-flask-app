@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>Delete User</title>
-    </head>
-    <body>
-        <h1>Delete User</h1>
-        <form action="{{ url_for('delete_user') }}" method="post">
-            <label for="name">Name:</label><br />
-            <input type="text" id="name" name="name" required /><br />
-            <input type="submit" value="Submit" />
-        </form>
-    </body>
+  <head>
+    <title>Delete Player</title>
+  </head>
+  <body>
+    <h1>Delete Player</h1>
+    <form action="{{ url_for('delete_player') }}" method="post">
+      <label for="player_id">Player ID to delete:</label><br />
+      <input type="number" id="player_id" name="player_id" required /><br />
+      
+      <input type="submit" value="Delete Player" />
+    </form>
+  </body>
 </html>
