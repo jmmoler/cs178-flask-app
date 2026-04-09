@@ -105,3 +105,23 @@ def player_id_exists(player_id):
     result = execute_query(query, (player_id,))
     return len(result) > 0
 
+def get_player_stats_history(player_id):
+    query = """
+        SELECT 
+            p.player_id,
+            p.first_name,
+            p.last_name,
+            s.stat_id,
+            s.points,
+            s.assists,
+            s.rebounds,
+            s.steals,
+            s.blocks,
+            s.game_date
+        FROM Players p
+        JOIN Player_Stats ps ON p.player_id = ps.player_id
+        JOIN Stats s ON ps.stat_id = s.stat_id
+        WHERE p.player_id = %s
+        ORDER BY s.game_date DESC, s.stat_id DESC
+    """
+    return execute_query(query, (player_id,))

@@ -22,7 +22,7 @@ def add_player_by_pos():
         last_name = request.form['last_name']
         position = request.form['position']
 
-        # 🚨 check duplicate
+        # checks for duplicates
         if player_exists(first_name, last_name):
             flash('Player already exists!', 'danger')
             return redirect(url_for('add_player'))
@@ -89,6 +89,22 @@ def update_stats(player_id):
         return redirect(url_for('display_players'))
 
     return render_template('update_stats.html', player=player)
+
+@app.route('/player-stats/<int:player_id>')
+def player_stats(player_id):
+    player = get_player_by_id(player_id)
+
+    if not player:
+        flash("Player not found!", "danger")
+        return redirect(url_for('home'))
+
+    stats_history = get_player_stats_history(player_id)
+
+    return render_template(
+        'player_stats.html',
+        player=player,
+        stats_history=stats_history
+    )
 
 # These two lines of code should always be the last in the file
 if __name__ == '__main__':

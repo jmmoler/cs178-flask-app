@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Player Stats History</title>
+  </head>
+  <body>
+    <h1>Stats History for {{ player.first_name }} {{ player.last_name }}</h1>
+
+    {% if stats_history %}
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Game Date</th>
+          <th>Points</th>
+          <th>Assists</th>
+          <th>Rebounds</th>
+          <th>Steals</th>
+          <th>Blocks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in stats_history %}
+        <tr>
+          <td>{{ stat.game_date }}</td>
+          <td>{{ stat.points }}</td>
+          <td>{{ stat.assists }}</td>
+          <td>{{ stat.rebounds }}</td>
+          <td>{{ stat.steals }}</td>
+          <td>{{ stat.blocks }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No stats found for this player yet.</p>
+    {% endif %}
+
+    <br />
+
+    <form action="{{ url_for('update_stats', player_id=player.player_id) }}" method="get">
+      <input type="submit" value="Add Another Game Stat" />
+    </form>
+
+    <br />
+
+    <form action="{{ url_for('display_players') }}" method="get">
+      <input type="submit" value="Back to Players" />
+    </form>
+
+    <br />
+
+    <form action="{{ url_for('home') }}" method="get">
+      <input type="submit" value="Back to Home" />
+    </form>
+  </body>
+</html>
