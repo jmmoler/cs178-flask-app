@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Fan Ratings</title>
+  </head>
+  <body>
+    <h1>Rate Your Favorite Team</h1>
+    <form action="{{ url_for('fan_ratings') }}" method="post">
+      <label for="team_name">Team Name:</label><br />
+      <input type="text" id="team_name" name="team_name" required /><br />
+
+      <label for="fan_rating">Fan Rating:</label><br />
+      <input type="number" id="fan_rating" name="fan_rating" min="1" max="10" required /><br />
+
+      <input type="submit" value="Submit Rating" />
+    </form>
+
+    <br />
+
+    <form action="{{ url_for('home') }}" method="get">
+      <input type="submit" value="Back to Home" />
+    </form>
+  </body>
+</html>

@@ -5,15 +5,30 @@
 from flask import Flask
 from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
+from dynamoCode import *
 from dbCode import *
 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # This is required for flash messages
+app.secret_key = 'FDaEzbWXQqU2Unxq2gLaLhArOH+kSDLdw+lVZ3Zx'  # This is required for flash messages
 
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route("/fan-ratings", methods=["GET", "POST"])
+def fan_ratings():
+    if request.method == "POST":
+        team_name = request.form["team_name"].strip()
+        fan_rating = request.form["fan_rating"]
+
+        # Add or update the team rating in DynamoDB
+        success, message = add_or_update_team_rating(team_name, fan_rating)
+        flash(message, "success" if success else "danger")
+        
+        return redirect(url_for("fan_ratings"))
+
+    return render_template("fan_ratings.html")
 
 @app.route('/add-player', methods=['GET', 'POST'])
 def add_player_by_pos():

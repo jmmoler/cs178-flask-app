@@ -92,6 +92,7 @@ def get_player_by_id(player_id):
     result = execute_query(query, (player_id,))
     return result[0] if result else None
 
+
 def player_exists(first_name, last_name):
     query = """
     SELECT * FROM Players 
