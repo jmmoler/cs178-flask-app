@@ -29,7 +29,7 @@ def add_player_by_pos():
 
         add_player(first_name, last_name, position)
 
-        flash('Player added successfully!', 'success')
+        flash(f'{first_name} {last_name} added successfully!', 'success')
         return redirect(url_for('home'))
 
     return render_template('add_player.html')
