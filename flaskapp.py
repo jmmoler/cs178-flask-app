@@ -49,6 +49,15 @@ def display_players():
     players = get_all_players()
     return render_template('display_players.html', players=players)
 
+
+@app.route('/update-player', methods=['GET', 'POST'])
+def go_to_update():
+    if request.method == 'POST':
+        player_id = request.form['player_id']
+        return redirect(url_for('update_stats', player_id=player_id))
+    return render_template('update_player.html')
+
+
 @app.route('/update-stats/<int:player_id>', methods=['GET', 'POST'])
 def update_stats(player_id):
     if request.method == 'POST':
