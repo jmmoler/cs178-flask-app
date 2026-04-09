@@ -16,30 +16,39 @@ def home():
     return render_template('home.html')
 
 @app.route('/add-player', methods=['GET', 'POST'])
-def add_player_by_pos():
+def add_player():
     if request.method == 'POST':
-        # Extract form data
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         position = request.form['position']
-        
-        # Add player to the database
+
+        # 🚨 check duplicate
+        if player_exists(first_name, last_name):
+            flash('Player already exists!', 'danger')
+            return redirect(url_for('add_player'))
+
         add_player(first_name, last_name, position)
 
-        flash(f'{first_name} {last_name} added successfully!', 'success')
+        flash('Player added successfully!', 'success')
         return redirect(url_for('home'))
+
     return render_template('add_player.html')
 
 @app.route('/delete-player', methods=['GET', 'POST'])
 def delete_player_by_id():
     if request.method == 'POST':
-        # Extract form data
         player_id = request.form['player_id']
-        # Delete player from the database
+
+        # 🚨 check exists
+        if not player_id_exists(player_id):
+            flash('Player ID does not exist!', 'danger')
+            return redirect(url_for('delete_player_by_id'))
+
         delete_player(player_id)
-        
-        flash('Player removed successfully!', 'warning')
+
+        flash('Player deleted successfully!', 'warning')
         return redirect(url_for('home'))
+
     return render_template('delete_player.html')
 
 @app.route('/display-players')
@@ -59,11 +68,12 @@ def go_to_update():
 
 @app.route('/update-stats/<int:player_id>', methods=['GET', 'POST'])
 def update_stats(player_id):
-    player = get_player_by_id(player_id)
 
-    if not player:
-        flash("Player not found!", "danger")
+    if not player_id_exists(player_id):
+        flash("Player ID does not exist!", "danger")
         return redirect(url_for('home'))
+
+    player = get_player_by_id(player_id)
 
     if request.method == 'POST':
         points = request.form['points']

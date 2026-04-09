@@ -91,3 +91,17 @@ def get_player_by_id(player_id):
     query = "SELECT * FROM Players WHERE player_id = %s"
     result = execute_query(query, (player_id,))
     return result[0] if result else None
+
+def player_exists(first_name, last_name):
+    query = """
+    SELECT * FROM Players 
+    WHERE first_name = %s AND last_name = %s
+    """
+    result = execute_query(query, (first_name, last_name))
+    return len(result) > 0
+
+def player_id_exists(player_id):
+    query = "SELECT * FROM Players WHERE player_id = %s"
+    result = execute_query(query, (player_id,))
+    return len(result) > 0
+
