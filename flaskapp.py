@@ -25,8 +25,8 @@ def add_player_by_pos():
         
         # Add player to the database
         add_player(first_name, last_name, position)
-        
-        flash('Player added successfully!', 'success')
+
+        flash(f'{first_name} {last_name} added successfully!', 'success')
         return redirect(url_for('home'))
     return render_template('add_player.html')
 
@@ -39,7 +39,8 @@ def delete_player_by_id():
         # Delete player from the database
         delete_player(player_id)
         
-        flash('Player deleted successfully!', 'warning')
+        player = get_player_by_id(player_id)
+        flash(f'{player.first_name} {player.last_name} removed successfully!', 'warning')
         return redirect(url_for('home'))
     return render_template('delete_player.html')
 
