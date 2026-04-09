@@ -16,7 +16,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/add-player', methods=['GET', 'POST'])
-def add_player():
+def add_player_by_pos():
     if request.method == 'POST':
         first_name = request.form['first_name']
         last_name = request.form['last_name']
