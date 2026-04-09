@@ -35,11 +35,10 @@ def delete_player_by_id():
     if request.method == 'POST':
         # Extract form data
         player_id = request.form['player_id']
-        
+        player = get_player_by_id(player_id)
         # Delete player from the database
         delete_player(player_id)
         
-        player = get_player_by_id(player_id)
         flash(f'{player.first_name} {player.last_name} removed successfully!', 'warning')
         return redirect(url_for('home'))
     return render_template('delete_player.html')
