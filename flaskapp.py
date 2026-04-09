@@ -60,6 +60,12 @@ def go_to_update():
 
 @app.route('/update-stats/<int:player_id>', methods=['GET', 'POST'])
 def update_stats(player_id):
+    player = get_player_by_id(player_id)
+
+    if not player:
+        flash("Player not found!", "danger")
+        return redirect(url_for('home'))
+
     if request.method == 'POST':
         points = request.form['points']
         assists = request.form['assists']
@@ -68,13 +74,12 @@ def update_stats(player_id):
         blocks = request.form['blocks']
         game_date = request.form['game_date']
 
-        # Update player stats in the database
         update_player_stats(player_id, points, assists, rebounds, steals, blocks, game_date)
 
         flash('Player stats updated successfully!', 'success')
         return redirect(url_for('display_players'))
 
-    return render_template('update_stats.html', player_id=player_id)
+    return render_template('update_stats.html', player=player)
 
 # These two lines of code should always be the last in the file
 if __name__ == '__main__':
