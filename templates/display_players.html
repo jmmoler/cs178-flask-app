@@ -5,6 +5,7 @@
   </head>
   <body>
     <h1>List of Players</h1>
+
     <table>
       <thead>
         <tr>
@@ -25,5 +26,13 @@
         {% endfor %}
       </tbody>
     </table>
+
+    <br />
+
+    <!-- Back button -->
+    <form action="{{ url_for('home') }}" method="get">
+      <input type="submit" value="Back to Home" />
+    </form>
+
   </body>
 </html>
