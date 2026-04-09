@@ -4,9 +4,12 @@
     <title>Update Player Stats</title>
   </head>
   <body>
-    <h1>Update Stats for Player {{ player_id }}</h1>
+    <h1>
+      Update Stats for {{ player.first_name }} {{ player.last_name }}
+    </h1>
 
-    <form action="{{ url_for('update_stats', player_id=player_id) }}" method="post">
+    <form action="{{ url_for('update_stats', player_id=player.player_id) }}" method="post">
+      
       <label for="points">Points:</label><br />
       <input type="number" id="points" name="points" required /><br />
 
