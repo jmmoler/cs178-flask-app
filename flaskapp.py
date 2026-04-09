@@ -16,7 +16,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/add-player', methods=['GET', 'POST'])
-def add_player():
+def add_player_by_pos():
     if request.method == 'POST':
         # Extract form data
         first_name = request.form['first_name']
@@ -31,7 +31,7 @@ def add_player():
     return render_template('add_player.html')
 
 @app.route('/delete-player', methods=['GET', 'POST'])
-def delete_player():
+def delete_player_by_id():
     if request.method == 'POST':
         # Extract form data
         player_id = request.form['player_id']
