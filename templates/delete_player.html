@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1>Delete Player</h1>
-    <form action="{{ url_for('delete_player') }}" method="post">
+    <form action="{{ url_for('delete_player_by_id') }}" method="post">
       <label for="player_id">Player ID to delete:</label><br />
       <input type="number" id="player_id" name="player_id" required /><br />
       
