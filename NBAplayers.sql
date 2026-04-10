@@ -1,4 +1,5 @@
--- Create Players Table
+-- This SQL script to generate the NBA database was generate by ChatGPT
+-- It creates tables for Players, Teams, Stats, and the necessary join tables to link them together
 CREATE TABLE Players (
     player_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
